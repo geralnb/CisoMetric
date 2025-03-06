@@ -1,0 +1,62 @@
+#!/bin/bash
+
+DEFAULT_PORTS="80 443 8080 8443"
+PORTS=$DEFAULT_PORTS
+IPS=()
+
+show_help() {
+    echo "Usage: $0 [-h] [-p \"port1 port2...\"] IP1 [IP2 ...]"
+    echo ""
+    echo "Options:"
+    echo "  -h               Tampilkan bantuan"
+    echo "  -p \"port1 port2...\" te ntukan port khusus (default: $DEFAULT_PORTS)"
+    echo ""
+    echo "Contoh:"
+    echo "  $0 192.168.1.1"
+    echo "  $0 -p \"22 80 443\" 192.168.1.1 192.168.1.2"
+    echo "  $0 192.168.1.1 192.168.1.2 -p \"22 8080\""
+    exit 0
+}
+
+
+while getopts ":hp:" opt; do
+    case ${opt} in
+        h)
+            show_help
+            ;;
+        p)
+            PORTS=$OPTARG
+            ;;
+        ?)
+            echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [ "$#" -eq 0 ]; then
+    echo "Error: No IP address provided. Gunakan -h untuk bantuan."
+    exit 1
+else
+    IPS=($@)
+fi
+
+echo "Current ports: $PORTS"
+read -p "Apakah ingin menambahkan custom ports (Y/N)? " add_ports
+if [[ "$add_ports" =~ ^[Yy]$ ]]; then
+    read -p "Masukkan port khusus yang di inginkan: " custom_ports
+    PORTS="$PORTS $custom_ports"
+fi
+
+for ip in "${IPS[@]}"; do
+    echo ""
+    echo "Scanning IP: $ip"
+    for port in $PORTS; do
+        if (echo > /dev/tcp/$ip/$port) >/dev/null 2>&1; then
+            echo "  [OPEN] Port $port"
+        else
+            echo "  [CLOSED] Port $port"
+        fi
+    done
+done
