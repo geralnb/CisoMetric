@@ -1,0 +1,29 @@
+login1
+dengan burp suite
+🎉 FLAG: CSM{Ez_bgt_c0ba_c0ba_nya}
+claudetest1
+halo1027
+
+login2
+claudetest1
+halo1andhalo2
+CSM{S1mple_Skrep111ng!!__asdasd}
+
+login3
+ilp_test1
+Chalo1
+FLAG: CSM{b444d_capcayyy_heheh3} 
+
+login4
+moetest11
+halo111dent307
+CSM{encrypt33d_f0R_duummy}
+
+login5
+juggstest11
+mobhalo1
+CSM{hm4c_s1nGature_b4ny@k_DiGun44kan!} 
+
+login6
+[✓] VALID USERNAME: razortest1
+fuckhalo1
